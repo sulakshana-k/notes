@@ -1,0 +1,103 @@
+// Nodejs
+nodemon
+// Angular
+ng serve
+
+Modules: https://www.sitepoint.com/understanding-module-exports-exports-node-js/
+
+CORS:
+
+	Cross Origin: When port, domain name, host, scheme of URL client browser 
+			are different it falls into cross origin request.
+
+			Example: https://mydomain.com:3000/foo/bar
+			The scheme is "https".
+			The host is "mydomain.com". 
+			The port is "3000".
+
+
+	Same Origin: When all the details like port, domain name, scheme, and server
+			are same then the request is considered same origin.
+
+			Preflight requests are NOT triggered when the origin is same.
+
+	Preflight requests: These requests are sent by the browser to the server to
+			confirm whether it is safe to send the actual request or not.
+			Cross Origin requests are pre-flighted.
+
+	Simple Requests: These requests don't trigger preflight requests. Simple 
+			requests have to follow these guidelines:
+			https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
+
+
+require:
+	Used to import modules, local files (from the current directory or from the directory specified 
+	under __dirname)
+
+// 'app' is the comonly used variable name of the Express's constructor return.
+app.use():
+	A route will match any path that follows its path immediately with a “/”. 
+	For example: app.use('/apple', ...) will match “/apple”, “/apple/images”, “/apple/images/news”, and so on.
+
+	Since path defaults to “/”, middleware mounted without a path will be executed 
+	for every request to the app.
+	For example, this middleware function will be executed for every request to the 
+	app:
+
+	app.use(function (req, res, next) {
+	  console.log('Time: %d', Date.now())
+	  next()
+	})
+
+module vs exports.module:
+	
+	exports:
+		Used to export one function
+	exports.module:
+		It is the only way to expose anything from a file to the external world.
+		
+
+	exports is a reference to module.exports.
+
+	// Proper way to use exports:
+	exports = module.exports = {};
+
+	// Wrong way to use exports since module.exports is still pointing elsewhere.
+	exports = {};
+
+	https://blog.tableflip.io/the-difference-between-module-exports-and-exports/
+	https://www.hacksparrow.com/nodejs/exports-vs-module-exports.html
+
+
+Javascript - Pass by reference or pass by value:
+		https://stackoverflow.com/questions/13104494/does-javascript-pass-by-reference
+
+		Primitives are passed by value, and Objects are passed by "copy of a reference".
+
+		If you assign directly to an object from outside, it won't change anything.
+		If you assign directly to the properties of an object, it will reflect the changes.
+
+			function replace(ref) 
+			{
+			    ref = {};           // this code does _not_ affect the object passed
+			}
+
+			function update(ref) 
+			{
+			    ref.key = 'newvalue';  // this code _does_ affect the _contents_ of the object
+			}
+
+			var a = { key: 'value' };
+			replace(a);  // a still has its original value - it's unmodfied
+			update(a);   // the _contents_ of 'a' are changed
+
+
+
+
+
+
+
+
+
+
+

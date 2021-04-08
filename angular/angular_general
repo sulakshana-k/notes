@@ -1,0 +1,402 @@
+---Interface and Implements keywords--------------------------------:
+interface is a part of typescript. It is like a struct.
+'OnInit' is one of Angular's lifecycle functions. It has been implemented as an 
+interface.
+It gets called immediately after the constructor. 
+
+'implements' keyword ensures that we have defined everything in our class that is specified 
+in the particular interface. It is used for ensuring strict type checking.
+
+Example:
+'OnInit' is an interface. If we use it with 'implements' keyword and then if don't 
+define its function 'ngOnInit()', typescript compiler will throw error.
+
+
+
+---Service providers and Dependency Injection----------------------:
+	Services are a feature of Angular which make use of Angular's Dependency Injection
+system. Services are classes which are used for implementing facilities which many
+components may need. Example: Logging, Getting data from backend.
+
+Dependency Injection:
+	When an object of a class is provided as a parameter to the constructor 
+of another class, it is called dependency injection. 
+The object that is passed is called a Service.
+The class to which the object is passes is called the Client.
+The code that passes the object to client is called the Injector.
+
+Instead of client specifying which service to use, the client is told which service
+to use by the Injector.
+
+The "injection" refers to passing of a dependency ("service") into an object ("client")
+that would use it.
+Passing the service to the client instead of allowing the client to build or find the
+service is the basic requirement of this pattern.
+
+Intention of dependency injection is to seperate the creation of objects and their use
+to improve the readibility of code and reuse.
+
+
+Passing a ready-made object to a class for use is called dependency injection.
+
+
+From: https://en.wikipedia.org/wiki/Dependency_injection
+"
+	A client who wants to call some services should not have to know how to construct 
+those services. Instead, the client delegates the responsibility of providing its services
+to external code (the injector). The client is not allowed to call the injector code;[2] 
+it is the injector that constructs the services. The injector then injects (passes) the 
+services into the client which might already exist or may also be constructed by the injector. 
+The client then uses the services. This means the client does not need to know about the 
+injector, how to construct the services, or even which actual services it is using. The 
+client only needs to know about the intrinsic interfaces of the services because these 
+define how the client may use the services. This separates the responsibility of "use" 
+from the responsibility of "construction".
+"
+
+In Angular, dependency injection is provided at root level by default as follows:
+`
+@Injectable({
+	providedIn: 'root'
+)}
+`
+
+`providedIn: 'root'` means that this service will be available to all throughout 
+the project.
+
+We can restrict the availablity of services to certain parts of the project by
+writing a particular component or module name with `providedIn` 
+
+Lazy loading vs Eager Loading:
+	https://angular.io/guide/providers
+
+
+---Lifecycle hooks----------------------:
+In Angular component's lifecycle there are several functions which get called at 
+several ocassions when the component starts executing. They are called life cycle 
+hooks.
+
+https://angular.io/guide/lifecycle-hooks
+
+
+---Reactive Forms-----------------------;
+
+1. FormBuilder:
+	Used as syntactic sugar to easily build reactive form parts such as groups, 
+controls, arrays in Angular.
+
+
+
+
+
+---Templates----------------------------;
+
+Angular does not support <script> tag for security purpose and ignores one if it is there.
+
+Interpolation:
+	Allows dynamic string values in html.
+	Variable has to be included in {{}} in html, 
+	Example:
+		1. <p>{{my_name}}</p> where 'my_name' is a variable declared in typescript.
+	 
+		2. {{1 + 1}} results in 2 and then 2 is converted to a string.
+
+		3. {{3 + getValue()}} function calls are allowed between brackets.
+
+		4. Can also use values from inside the for loop:
+			*ngFor = "let customer of customers">{{customer.name}}
+
+		5. Input variable:
+			<label>Type here:
+				<input #customerInput> {{customerInput.value}}
+			</label>
+
+	There is an interpolation option in @Component metadata where you can change the { to 
+	something else.
+
+	Following operators/expressions are NOT allowed:
+	1. Assignments: =, +=, -=
+	2. new, typeOf, instanceOf
+	3. Chaining expressions ; or ,
+	4. ++, --
+	5. |, &
+	6. console.log
+	7. Math.max()
+
+	Allowed: https://angular.io/guide/template-expression-operators
+	1. !
+	2. $any 
+
+____________________________________________________________________________________
+
+2. Template statements:
+	Methods and properties which are supposed to be with user events are called
+	template statements. They are put in "".
+
+	(event) = "statement"
+
+	Example:
+	1. <button (click) = "deleteSomething()"> xyz </button>
+
+
+	Allowed:
+	1. '=' and ';' operators
+	2. Template statements can take $event as an argument. $event is related to the attached event.
+		<button (click) = "deleteSomething($event)"> xyz </button>
+
+	3. Template statements can take for loop's variables are arguments:
+		<button *ngFor = "let hero of heroList" (click) = "deleteSomething( hero )"> {{ hero.name }} </button> 
+
+	4. Form name:
+		Here 'ngSubmit' is the event and 'onSubmit' is the function
+		<form #heroForm (ngSubmit) = "onSubmit( heroForm )"> ... </form>
+
+	
+	Template context names take precedence over component context names.
+
+
+	Not allowed:
+	1. new
+	2. ++, --
+	3. +=, -=
+	4. bitwise operators like: |, &
+	5. Pipe operator
+	6. console.log()
+	7. Math.max()
+
+
+____________________________________________________________________________________
+Data binding:
+	https://angular.io/guide/binding-syntax
+
+	Read HTML book first.
+
+____________________________________________________________________________________
+Property binding:
+https://angular.io/guide/property-binding
+
+	Read HTML book first.
+
+____________________________________________________________________________________
+Attribute, class, and style bindings:
+https://angular.io/guide/attribute-binding
+	Read HTML book first.
+
+
+
+=====================================================================================
+
+
+MVC pattern:
+
+A request comes into the application -----> Gets routed to Controller ----->  Controller makes a request to a Model
+
+------> Model responds to the Controller -----> Controller sends a response to the view -----> View sends that response to the requester.
+
+
+	User at browser ---> Router ---> Controller  ---> 
+							  Model 
+	User at browser <--- View   <--- Controller  <---  	
+
+
+
+Mongoose opens a pool of five reusable connections to when it connects to a MongoDB
+database. WHY?
+Connecting to a database is time consuming so it is best to connect in the start of 
+the application and leave it till the end.
+
+How to use our own primary key in mongodb?
+
+...
+
+Observables:
+
+An observable is a lazily evaluated computation which can 
+return values ranging from zero to infinite.
+We call it lazy computaion because it starts returning 
+values only when someone subscribes to it. 
+Once subscribed, an observable keeps on returning values 
+till we unsubscribe from it.
+
+After 'complete' function is called further execution stops.
+'next' function can be called as many times as per desire.
+'error' function is called when an error occurs.
+
+Observer:
+  Observer is an object of set of function callbacks.
+
+    var x = {
+              next:     arg => { console.log() }
+              error:    arg => { console.log() }
+              complete: () => { console.log() }
+            }
+
+Here 'x' is an observer.
+
+To use an observer, pass it to the subscribe function of an observable.
+
+    my_observable.subscribe( x )
+
+Instead of creating an observer object callbacks can be directly passed to the 'subscribe' call. 
+
+    my_observable.subscribe( ( arg ) => { console.log( arg ) }, ( arg_error ) => { console.log( arg_error ), () => {} } )
+
+
+Pipable operators:
+    These are the operators which when applied to the Observable does not 
+    change it. They return a new Observable.
+    It is a pure operation.
+
+      filter()
+      mergeMap()
+
+    Example:
+      my_observable.pipe( <operator_function()> )
+
+
+
+Creation operators:
+    These operators take an input and return a new Observable.
+
+Observables vs Functions and Promises:
+
+1. Functions:
+    - Lazy evaluation. Starts executing only when called.
+    - Can return only once per call.
+    - A function may not return anything at all.
+
+2. Promises:
+    - Eager evaluation. Starts executing as soon as it is created.
+    - Asynchronous.
+    - Does return only one value per call.
+
+3. Observables:
+    - Lazy evaluation. Starts functioning only on subscribe call.
+    - Synchronous by default. Can be made Asynchronous by adding 
+      a timeout.
+    - Keeps on returning values ranging from zero to infinite 
+      since it is called. Stops returning values only on
+      unsubscribe call.
+
+Example of a sample Observable creation:
+
+  var obj_observable = new Observable( arg_subscriber => {
+                                                            arg_subscriber.next(1),
+                                                            arg_subscriber.next(2),
+                                                            arg_subscriber.complete() 
+                                                          } 
+                                     )
+
+  var my_observer = {
+                      next: (arg_nextValue) => { console.log("next: arg_nextValue", arg_nextValue)},
+                      error: (arg_error) => { console.log("error: ar_error", arg_error)},
+                      complete: () => { console.log("Complete notification received!")}
+                    }
+
+  var my_subscription = obj_observable.subscribe( my_observer );
+
+Observables can be created by 'new', 'from', 'of':
+
+'from':
+    - 'from' takes an input and converts it into an Observable.
+    - 'from' returns each element of an input array individually.
+
+'of':
+    - 'of' takes an input and converts it into an Observable.
+    - 'of' returns the whole input array at once.
+
+
+Subscription:
+  Subscription object represents the execution of an observable.
+  This object has a method called 'unsubscribe' which stops the subscription.
+
+  Example:
+      my_subscription = my_observable.subscribe( my_observer )
+      my_subscription.unsubscribe()
+
+      or:
+
+      my_subscription1 = my_observable.subscribe( my_observer )
+      my_subscription2 = my_observable.subscribe( my_observer )
+
+      my_subscription1.add( my_subscription2 )
+
+      // This will unsubscribe both the subscriptions.
+      my_subscription1.unsubscribe()
+            
+
+
+Subject:
+    Every Subject is a kind of Observable and observer.
+    Subject as an Observable multicasts its output to many observers. 
+    It is a kind of event emitter. It keeps track of its observers.
+
+    Subject has these functions - next(), error(), complete().
+
+    To feed values to a Subject, call next( <value> ). That will make
+    Subject multicast those values to its observers.
+
+    Since a Subject is also an observer, we can pass it (as an observer 
+    object) to the subscribe function of another Observable.
+
+
+Scheduler:
+    Scheduler's job is to coordinate when the computaion happens.
+
+
+--- To be read: ---------------------------------------------------------------------------------------------
+
+------ https://rxjs-dev.firebaseapp.com/guide/overview         --------
+------ https://rxjs-dev.firebaseapp.com/operator-decision-tree --------
+
+https://www.metaltoad.com/blog/angular-6-upgrading-api-calls-rxjs-6
+https://www.learnrxjs.io/
+https://www.youtube.com/watch?v=PhggNGsSQyg
+
+
+- Otherthings:              https://rxjs-dev.firebaseapp.com/api/index
+
+- Examples to try out:      https://rxviz.com/
+
+- Operators:                https://www.tutorialspoint.com/rxjs/rxjs_operators.htm
+                            https://rxjs-dev.firebaseapp.com/guide/operators
+
+- Observables:              https://x-team.com/blog/rxjs-observables/
+- Multicasted Observables:  https://rxjs-dev.firebaseapp.com/guide/subject
+- Scheduler:                https://rxjs-dev.firebaseapp.com/guide/scheduler
+- Testing:                  https://stackoverflow.com/questions/41779910/the-right-way-to-test-rxjs
+- Pure vs Impure functions: https://rxjs-dev.firebaseapp.com/guide/overview
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
