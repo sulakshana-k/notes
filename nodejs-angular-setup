@@ -1,0 +1,50 @@
+// A: 
+
+// Install NVM (node version manager)
+
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev
+
+sudo apt install curl
+// Replace v0.35.2 with latest release of nvm https://github.com/nvm-sh/nvm/releases
+curl https://raw.githubusercontent.com/creationix/nvm/v0.35.2/install.sh | bash
+
+Close terminal and open fresh.
+
+// (0.35.2)
+nvm --version
+
+// installs long term support version of node.
+nvm install --lts
+nvm use --lts
+
+// (12.16.0)
+which node
+
+// B: 
+
+// Install Angular (@angular/cli@9.0.2)
+npm install -g @angular/cli
+
+// Install Express
+npm install express@4.15.2
+
+// For continious running of nodejs
+npm install nodemon
+
+// To update local angular cli: https://update.angular.io/#8.0:9.0
+"Your global Angular CLI version (9.0.2) is greater than your local \
+version (8.3.25). The local Angular CLI version is used."
+npm install --save-dev @angular/cli@latest
+
+
+// To get rid of the angular bug - 
+"Repository is not clean. Please commit or stash any changes before \
+updating."
+ng update @angular/cli @angular/core --allow-dirty --force
+
+// To update package.json
+ng update @angular/cli --migrate-only --from 8 --to 9 --allow-dirty --force
+
+
+
